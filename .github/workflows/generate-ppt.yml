@@ -1,0 +1,32 @@
+name: Generate Mining Seminar PPT
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-ppt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate PowerPoint
+        run: |
+          python generate_ppt.py
+
+      - name: Save PowerPoint
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mining-Seminar-PPT
+          path: Mining_Seminar_15_Slides.pptx
